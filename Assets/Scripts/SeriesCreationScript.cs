@@ -1,42 +1,35 @@
-using System.Collections;
 using UnityEngine;
 
 public class SeriesCreationScript : MonoBehaviour
 {
     [SerializeField] GameObject[] objects;
-    [SerializeField] int seriesLength;
-    [SerializeField] int seriesNumber;
-    [SerializeField] int seriesInterval;
+    [SerializeField] GameObject Roll;
 
-    private int firstXPosition;
     private System.Random rand = new System.Random();
+    private Transform thisTransform;
 
-    private void Awake()
+    private int columns, rows;
+    private float firstXPosition;
+
+    public void SetParametrs(int Columns, int Rows)
     {
-        firstXPosition = seriesLength / 2 * -1;
-        Creation();
-        //StartCoroutine(Timer());
+        columns = Columns; rows = Rows;
+        thisTransform = GetComponent<Transform>();
+        firstXPosition = (Columns - 1) / -2f;
+        SeriesCreation(5);
     }
 
-    private IEnumerator Timer()
+    public void SeriesCreation(int offset)
     {
-        for (int i = 0; i < seriesNumber; i++) 
+        for (int j = 0; j > -rows; j--)
         {
-            yield return new WaitForSeconds(seriesInterval);
-            Creation();
-        }
-        StopAllCoroutines();
-    }
-
-    public void Creation()
-    {
-        for (int j = 0; j < seriesNumber; j++)
-        {
-            for (int i = 0; i < seriesLength; i++)
+            for (int i = 0; i < columns; i++)
             {
-                Instantiate(objects[rand.Next(3)], new Vector3(firstXPosition + i, 1.5f, 5 + j), Quaternion.identity);
+                Instantiate(objects[rand.Next(objects.Length)], new Vector3(firstXPosition + i, 3f, j - offset), Quaternion.identity, thisTransform);
             }
         }
-        
+
+        Instantiate(Roll);
     }
+
 }

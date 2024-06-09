@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
-    [SerializeField] float force;
     private Rigidbody rb;
 
     private void Awake()
@@ -12,7 +11,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void Movement(Vector3 target)
     {
-        rb.velocity = (target - transform.position) * force;
+        rb.velocity = (target - transform.position) * GlobalVars.PlayerSpeed;
     }
 
 }
